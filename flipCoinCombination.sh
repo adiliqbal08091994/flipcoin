@@ -222,3 +222,21 @@ triplet_run()
             ;;
         esac
     done
+iter=0
+while [[ $iter -lt 1 ]]
+do
+    read -p " enter yout choice 1:singlet 2:doubblet 3:triplet 4:to exit" wish
+    case "$wish" in 
+        "1")
+            echo $(singlet_run)
+        ;;
+        "2")
+            echo $(doublet_run)
+        ;;
+        "3")
+        echo $(triplet_run)
+        ;;
+        "4")
+            iter=$wish
+    esac
+done
