@@ -36,3 +36,51 @@ max ()
         echo $2
     fi
 }
+
+singlet_run()
+{
+    declare -A singlet
+    singlet[heads]=0
+    singlet[tails]=0
+    n=0
+    i=0
+    for j in ${!singlet[@]}
+    do  
+        key_val[$i]=$j
+        ((i++))
+    done
+    while [[ $n -lt 10 ]]
+    do
+        rslt="$(flip)"
+        #echo $rslt
+        case "$rslt" in
+            "h") 
+            n=${singlet[heads]}
+            singlet[heads]=$((${singlet[heads]}+1))
+            ((n++))
+            ;;
+            "t")
+            n=${singlet[tails]}
+            singlet[tails]=$((${singlet[tails]}+1))
+            ((n++))
+            ;;
+        esac
+    done
+    @echo ${singlet[@]}
+    singlet_rslt=($(percent ${singlet[@]}))
+    #echo ${singlet_rslt[@]}
+    index=0
+    mx=0
+    for i in ${!singlet_rslt[@]}
+    do
+        mx=$(max $mx ${singlet_rslt[$i]})
+        
+        if [[ $mx == ${singlet_rslt[$i]} ]]
+        then
+            index=$i
+        fi
+    done
+    #echo $mx $index
+    echo ${key_val[$index]} "is the winner and percent is $mx"
+
+}
