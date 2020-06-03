@@ -147,3 +147,78 @@ doublet_run()
     #echo $mx $index
     echo ${key_val[$index]} "is the winner and percent is $mx"
 }
+
+
+triplet_run()
+{
+    declare -A triplet
+    triplet[hhh]=0
+    triplet[hht]=0
+    triplet[hth]=0
+    triplet[thh]=0
+    triplet[htt]=0
+    triplet[tht]=0
+    triplet[tth]=0
+    triplet[ttt]=0
+
+    n=0
+    i=0
+    for j in ${!triplet[@]}
+    do  
+        key_val[$i]=$j
+        ((i++))
+    done
+    while [[ $n -lt 10 ]]
+    do
+        rslt="$(flip),$(flip),$(flip)"
+        #echo $rslt
+        case "$rslt" in
+            "h,h,h")
+            n=triplet[hhh]
+            triplet[hhh]=$((${triplet[hhh]}+1))
+            ((n++))
+            ;;
+            "h,h,t")
+            n=triplet[hht]
+            triplet[hht]=$((${triplet[hht]}+1))
+            ((n++))
+            ;;
+            
+            "h,t,h")
+            n=triplet[hth]
+            triplet[hth]=$((${triplet[hth]}+1))
+            ((n++))
+            ;;
+
+            "t,h,h")
+            n=triplet[thh]
+            triplet[thh]=$((${triplet[thh]}+1))
+            ((n++))
+            ;;
+            
+            "h,t,t")
+            n=triplet[htt]
+            triplet[htt]=$((${triplet[htt]}+1))
+            ((n++))
+            ;;
+
+            "t,h,t")
+            n=triplet[tht]
+            triplet[tht]=$((${triplet[tht]}+1))
+            ((n++))
+            ;;
+
+
+            "t,t,h")
+            n=triplet[tth]
+            triplet[tth]=$((${triplet[tth]}+1))
+            ((n++))
+            ;;
+
+            "t,t,t")
+            n=triplet[ttt]
+            triplet[ttt]=$((${triplet[ttt]}+1))
+            ((n++))
+            ;;
+        esac
+    done
