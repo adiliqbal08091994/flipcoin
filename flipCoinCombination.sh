@@ -84,3 +84,66 @@ singlet_run()
     echo ${key_val[$index]} "is the winner and percent is $mx"
 
 }
+
+doublet_run()
+{
+
+    declare -A doubblet
+    doubblet[hh]=0
+    doubblet[ht]=0
+    doubblet[th]=0
+    doubblet[tt]=0
+    n=0
+    i=0
+    for j in ${!doubblet[@]}
+    do  
+        key_val[$i]=$j
+        ((i++))
+    done
+    while [[ $n -lt 10 ]]
+    do
+        rslt="$(flip),$(flip)"
+        #echo $rslt
+        case "$rslt" in
+            "h,h") 
+            n=${doubblet[hh]}
+            doubblet[hh]=$((${doubblet[hh]}+1))
+            ((n++))
+            ;;
+            
+            "h,t") 
+            n=${doubblet[ht]}
+            doubblet[ht]=$((${doubblet[ht]}+1))
+            ((n++))
+            ;;
+            
+            "t,h") 
+            n=${doubblet[th]}
+            doubblet[th]=$((${doubblet[th]}+1))
+            ((n++))
+            ;;
+            
+            "t,t") 
+            n=${doubblet[tt]}
+            doubblet[tt]=$((${doubblet[tt]}+1))
+            ((n++))
+            ;;
+        esac
+    done
+    #echo ${doubblet[@]}
+    doubler_rslt=($(percent ${doubblet[@]}))
+    #echo ${doubler_rslt[@]}
+    index=0
+    mx=0
+    for i in ${!doubler_rslt[@]}
+    do
+        mx=$(max $mx ${doubler_rslt[$i]})
+        
+        if [[ $mx == ${doubler_rslt[$i]} ]]
+        then
+            index=$i
+        fi
+    done
+    #echo $mx $index
+    echo ${key_val[$index]} "is the winner and percent is $mx"
+}
